@@ -8,7 +8,8 @@
             [princess-nokia-api.config :refer [env]]
             [ring.middleware.flash :refer [wrap-flash]]
             [immutant.web.middleware :refer [wrap-session]]
-            [ring.middleware.defaults :refer [site-defaults wrap-defaults]])
+            [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
+            [ring.middleware.cors :refer [wrap-cors]])
   (:import [javax.servlet ServletContext]))
 
 (defn wrap-context [handler]
@@ -55,6 +56,7 @@
 
 (defn wrap-base [handler]
   (-> ((:middleware defaults) handler)
+      wrap-formats
       wrap-webjars
       wrap-flash
       (wrap-session {:cookie-attrs {:http-only true}})
@@ -63,4 +65,6 @@
             (assoc-in [:security :anti-forgery] false)
             (dissoc :session)))
       wrap-context
+      (wrap-cors :access-control-allow-origin [#".+"]
+                 :access-control-allow-methods [:get])
       wrap-internal-error))

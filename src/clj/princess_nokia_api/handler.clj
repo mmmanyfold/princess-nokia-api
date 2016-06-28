@@ -5,7 +5,8 @@
             [compojure.route :as route]
             [princess-nokia-api.env :refer [defaults]]
             [mount.core :as mount]
-            [princess-nokia-api.middleware :as middleware]))
+            [princess-nokia-api.middleware :as middleware]
+            [princess-nokia-api.routes.api :refer [api-routes]]))
 
 (mount/defstate init-app
                 :start ((or (:init defaults) identity))
@@ -13,6 +14,7 @@
 
 (def app-routes
   (routes
+    #'api-routes
     (-> #'home-routes
         (wrap-routes middleware/wrap-csrf)
         (wrap-routes middleware/wrap-formats))

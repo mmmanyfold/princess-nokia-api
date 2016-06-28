@@ -24,7 +24,9 @@
                  [luminus-nrepl "0.1.4"]
                  [org.webjars/webjars-locator-jboss-vfs "0.1.0"]
                  [luminus-immutant "0.2.0"]
-                 [amazonica "0.3.62"]]
+                 [amazonica "0.3.62"]
+                 [metosin/compojure-api "1.1.3"]
+                 [ring-cors "0.1.7"]]
 
   :min-lein-version "2.0.0"
 
