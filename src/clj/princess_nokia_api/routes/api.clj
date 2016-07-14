@@ -7,7 +7,8 @@
 
 (defn get-objects-from-aws-s3 [_]
   (let [objs (list-objects :bucket-name "princess-nokia")]
-    (ok {:princess-nokia (:object-summaries objs)})))
+    (ok {:princess-nokia (filter #(not (.contains (:key %) ".zip"))
+                                 (:object-summaries objs))})))
 
 (defroutes api-routes
            (context "/api" []
